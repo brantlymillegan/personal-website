@@ -1,10 +1,10 @@
 # Brantly Millegan — Personal Website
 
 The source for [brantly.com](https://brantly.com): a concise personal website
-covering Brantly's work history, education, and life beyond the résumé.
+covering Brantly's projects, education, and life beyond work.
 
-This first version establishes the design and content structure. The detailed
-CV chronology will be added in a later pass.
+This first version establishes a deliberately minimal design and content
+structure. Detailed entries will be added in a later pass.
 
 ## Local development
 

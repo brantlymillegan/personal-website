@@ -29,9 +29,10 @@ test("server-renders Brantly's personal website", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Brantly Millegan — Resume &amp; Personal Site<\/title>/i);
-  assert.match(html, /Curriculum vitae/);
-  assert.match(html, /The work,/);
+  assert.match(html, /<title>Brantly Millegan<\/title>/i);
+  assert.match(html, />Projects</);
+  assert.match(html, />Education</);
+  assert.match(html, />About Me</);
   assert.match(html, /Faith and family/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
@@ -44,7 +45,7 @@ test("removes all temporary starter preview code", async () => {
   ]);
 
   assert.match(page, /Brantly Millegan/);
-  assert.match(layout, /Resume & Personal Site/);
+  assert.match(layout, /title: "Brantly Millegan"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.deepEqual(
     await readdir(new URL("../app/_sites-preview", import.meta.url)),
