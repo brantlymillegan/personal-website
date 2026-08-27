@@ -42,14 +42,36 @@ test("pre-renders Brantly's static personal website", async () => {
       ?.length,
     6,
   );
+  assert.equal(
+    html.match(/class="mobile-collapsible-summary-tappable"/g)?.length,
+    6,
+  );
   assert.equal(html.match(/class="mobile-collapsible-content"/g)?.length, 10);
   assert.doesNotMatch(html, /mobile-collapsible-lead/);
-  assert.equal(html.match(/class="mobile-collapsible-toggle"/g)?.length, 10);
+  assert.equal(html.match(/class="mobile-collapsible-toggle"/g)?.length, 4);
+  assert.equal(
+    html.match(/class="mobile-collapsible-indicator"/g)?.length,
+    6,
+  );
+  assert.equal(
+    html.match(/class="mobile-collapsible-summary-hit-area"/g)?.length,
+    6,
+  );
   assert.equal(
     html.match(
       /class="mobile-collapsible-toggle"[^>]*aria-expanded="false"/g,
     )?.length,
-    10,
+    4,
+  );
+  assert.equal(
+    html.match(
+      /class="mobile-collapsible-summary-hit-area"[^>]*aria-expanded="false"/g,
+    )?.length,
+    6,
+  );
+  assert.doesNotMatch(
+    html,
+    /class="mobile-collapsible-summary-hit-area"[^>]*(?:aria-hidden|tabindex)/,
   );
   assert.match(
     html,
@@ -344,6 +366,8 @@ test("removes all temporary starter preview code", async () => {
   assert.match(globals, /max-width: 1140px/);
   assert.match(globals, /max-width: 750px/);
   assert.match(globals, /@media \(max-width: 760px\)/);
+  assert.match(globals, /margin-inline-start: -56px/);
+  assert.match(globals, /width: calc\(100% \+ 56px\)/);
   assert.match(globals, /max-width: 70ch/);
   assert.match(globals, /\.project-entry li::before/);
   assert.match(globals, /content: "⟢"/);

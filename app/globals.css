@@ -445,7 +445,12 @@ h2 {
   gap: 0.2em;
 }
 
-.mobile-collapsible-toggle {
+.mobile-collapsible-toggle,
+.mobile-collapsible-indicator {
+  display: none;
+}
+
+.mobile-collapsible-summary-hit-area {
   display: none;
 }
 
@@ -741,6 +746,51 @@ p {
     flex-wrap: wrap;
   }
 
+  .mobile-collapsible-summary-tappable {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    touch-action: manipulation;
+  }
+
+  .mobile-collapsible-summary-hit-area {
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: block;
+    inset: 0;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .mobile-collapsible-summary-hit-area:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .mobile-collapsible-summary-tappable a {
+    position: relative;
+    z-index: 2;
+  }
+
+  .mobile-collapsible-indicator {
+    align-items: center;
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    height: 40px;
+    justify-content: center;
+    margin: -8px;
+    pointer-events: none;
+    position: relative;
+    vertical-align: middle;
+    width: 40px;
+  }
+
   .mobile-collapsible-toggle {
     -webkit-tap-highlight-color: transparent;
     align-items: center;
@@ -762,7 +812,8 @@ p {
     width: 40px;
   }
 
-  .mobile-collapsible-toggle::before {
+  .mobile-collapsible-toggle::before,
+  .mobile-collapsible-indicator::before {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: inherit;
@@ -845,8 +896,8 @@ p {
   }
 
   .mobile-collapsible-full-width > .mobile-collapsible-content {
-    margin-inline-start: -72px;
-    width: calc(100% + 72px);
+    margin-inline-start: -56px;
+    width: calc(100% + 56px);
   }
 
   .subproject-entry {
@@ -870,7 +921,8 @@ p {
     white-space: nowrap;
   }
 
-  .mobile-summary-tail .mobile-collapsible-toggle {
+  .mobile-summary-tail .mobile-collapsible-toggle,
+  .mobile-summary-tail .mobile-collapsible-indicator {
     margin-left: calc(0.18em - 8px);
   }
 
@@ -928,6 +980,7 @@ p {
   .subproject-entry::before,
   .subproject-entry:last-child::after,
   .mobile-collapsible-toggle::before,
+  .mobile-collapsible-indicator::before,
   .mobile-collapsible-chevron,
   .mobile-collapsible-content,
   .project-entry .mobile-collapsible-content,
