@@ -57,12 +57,9 @@ test("pre-renders Brantly's static personal website", async () => {
     ["https://ethidentitykit.com/", "Ethereum Identity Kit (EIK)"],
     ["https://x.com/ENSMarketBot", "ENSMarketBot"],
     ["https://www.churchpop.com/", "ChurchPOP"],
-    [
-      "https://www.catholic.edu/",
-      "Catholic University of America (DC)",
-    ],
-    ["https://www.stthomas.edu/", "University of St. Thomas (MN)"],
-    ["https://www.wheaton.edu/", "Wheaton College (IL)"],
+    ["https://www.catholic.edu/", "Catholic University of America"],
+    ["https://www.stthomas.edu/", "University of St. Thomas"],
+    ["https://www.wheaton.edu/", "Wheaton College"],
   ];
   const escapeRegExp = (value) =>
     value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -71,17 +68,20 @@ test("pre-renders Brantly's static personal website", async () => {
     assert.match(
       html,
       new RegExp(
-        `href="${escapeRegExp(href)}"[^>]*>${escapeRegExp(title)}</a>`,
+        `href="${escapeRegExp(href)}"[^>]*>${escapeRegExp(title)}(?:</a>|<span class="sr-only">)`,
       ),
     );
   }
   const externalLinks = html.match(/<a\b[^>]*href="https:[^>]*>/g) ?? [];
-  assert.equal(externalLinks.length, 14);
+  assert.equal(externalLinks.length, 26);
   for (const link of externalLinks) {
     assert.match(link, /target="_blank"/);
     assert.match(link, /rel="noreferrer"/);
   }
   assert.equal(html.match(/<h3[^>]*><a href=/g)?.length, titleLinks.length);
+  assert.equal(html.match(/class="logo-link"/g)?.length, 12);
+  assert.match(html, /aria-label="Visit Ethereum Name Service website"/);
+  assert.match(html, /aria-label="Visit Wheaton College website"/);
   assert.match(html, /Ethereum Name Service \(ENS\)/);
   assert.match(html, /ens-logo\.png/);
   assert.match(html, /Director of Operations/);
@@ -233,7 +233,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, />Grails</);
   assert.match(
     html,
-    /class="subproject-summary"><h3 class="subproject-title"><a href="https:\/\/grails\.app\/"[^>]*>Grails<\/a><\/h3><button class="mobile-collapsible-toggle"/,
+    /class="subproject-summary"><h3 class="subproject-title" aria-label="Grails"><a href="https:\/\/grails\.app\/"[^>]*>Grails<\/a>[^<]*<button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /grails-logo\.png/);
   assert.doesNotMatch(html, /Creator, Project Director/);
@@ -245,7 +245,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, /Ethereum Follow Protocol \(EFP\)/);
   assert.match(
     html,
-    /class="subproject-summary"><h3 class="subproject-title"><a href="https:\/\/efp\.app\/"[^>]*>Ethereum Follow Protocol \(EFP\)<\/a><\/h3><button class="mobile-collapsible-toggle"/,
+    /class="subproject-summary"><h3 class="subproject-title" aria-label="Ethereum Follow Protocol \(EFP\)"><a href="https:\/\/efp\.app\/"[^>]*>Ethereum Follow Protocol \(EFP\)<\/a>[^<]*<button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /efp-logo\.png/);
   assert.doesNotMatch(html, /class="meta-pill">2023<\/span>/);
@@ -266,16 +266,26 @@ test("pre-renders Brantly's static personal website", async () => {
     html,
     /Best Twitter bot tracking significant ENS name sales, offers, and registrations/,
   );
-  assert.match(html, /Wheaton College \(IL\)/);
-  assert.match(html, /University of St\. Thomas \(MN\)/);
-  assert.match(html, /Catholic University of America \(DC\)/);
+  assert.match(html, /Wheaton College/);
+  assert.match(html, /University of St\. Thomas/);
+  assert.match(html, /Catholic University of America/);
+  assert.doesNotMatch(html, /\((?:DC|MN|IL)\)/);
+  assert.match(html, /class="place-icon place-icon-dc"/);
+  assert.match(html, /class="place-icon place-icon-mn"/);
+  assert.match(html, /class="place-icon place-icon-il"/);
+  assert.match(
+    html,
+    /class="sr-only">\s*(?:<!-- -->)?District of Columbia<\/span>/,
+  );
+  assert.match(html, /class="sr-only">\s*(?:<!-- -->)?Minnesota<\/span>/);
+  assert.match(html, /class="sr-only">\s*(?:<!-- -->)?Illinois<\/span>/);
   assert.ok(
-    html.indexOf("Catholic University of America (DC)") <
-      html.indexOf("University of St. Thomas (MN)"),
+    html.indexOf("Catholic University of America") <
+      html.indexOf("University of St. Thomas"),
   );
   assert.ok(
-    html.indexOf("University of St. Thomas (MN)") <
-      html.indexOf("Wheaton College (IL)"),
+    html.indexOf("University of St. Thomas") <
+      html.indexOf("Wheaton College"),
   );
   assert.match(html, /logo-wheaton-shield\.svg/);
   assert.match(html, /st-thomas-logo\.png/);

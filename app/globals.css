@@ -60,6 +60,16 @@
   box-sizing: border-box;
 }
 
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 ::selection {
   background: var(--selection);
   color: var(--text);
@@ -351,6 +361,13 @@ h2 {
   transform-origin: center;
 }
 
+.logo-link {
+  border-radius: 50%;
+  display: block;
+  justify-self: start;
+  line-height: 0;
+}
+
 .project-logo {
   border-radius: 50%;
   height: 64px;
@@ -495,6 +512,12 @@ h2 {
   outline-offset: 3px;
 }
 
+.project-entry .logo-link:focus-visible,
+.education-entry .logo-link:focus-visible {
+  border-radius: 50%;
+  outline-offset: 4px;
+}
+
 .project-role a {
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
@@ -528,6 +551,27 @@ h2 {
   color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.48;
+}
+
+.place-icon {
+  display: inline-block;
+  fill: currentColor;
+  height: 0.82em;
+  margin-left: 0.32em;
+  opacity: 0.58;
+  vertical-align: -0.08em;
+}
+
+.place-icon-dc {
+  width: 0.62em;
+}
+
+.place-icon-mn {
+  width: 0.65em;
+}
+
+.place-icon-il {
+  width: 0.45em;
 }
 
 .meta-pill {
@@ -609,15 +653,15 @@ p {
     color: var(--muted);
     cursor: pointer;
     display: inline-flex;
-    height: 36px;
+    height: 24px;
     justify-content: center;
-    margin: -3px 0;
+    margin: 0;
     padding: 0;
     position: relative;
     touch-action: manipulation;
     user-select: none;
     vertical-align: middle;
-    width: 36px;
+    width: 24px;
   }
 
   .mobile-collapsible-toggle::before {
@@ -625,7 +669,7 @@ p {
     border: 1px solid var(--border);
     border-radius: inherit;
     content: "";
-    inset: 4px;
+    inset: 1px;
     position: absolute;
     transition:
       background-color 180ms ease,
@@ -703,21 +747,23 @@ p {
   }
 
   .subproject-entry {
-    gap: 12px;
+    gap: 8px;
     grid-template-columns: 28px minmax(0, 1fr);
   }
 
   .subproject-summary {
-    align-items: end;
-    column-gap: 0.08em;
-    display: inline-grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    display: block;
     max-width: 100%;
-    width: max-content;
   }
 
   .subproject-summary .subproject-title {
+    display: inline;
+    font-size: 0.94rem;
     margin-bottom: 0;
+  }
+
+  .subproject-summary .mobile-collapsible-toggle {
+    margin-right: -6px;
   }
 
   .mobile-summary-tail {

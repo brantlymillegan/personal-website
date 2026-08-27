@@ -1,6 +1,79 @@
 import MobileCollapsibleList from "./mobile-collapsible-list";
 import ThemeToggle from "./theme-toggle";
 
+type LinkedLogoProps = {
+  href: string;
+  imageClassName: string;
+  label: string;
+  size: number;
+  src: string;
+};
+
+function LinkedLogo({
+  href,
+  imageClassName,
+  label,
+  size,
+  src,
+}: LinkedLogoProps) {
+  return (
+    <a
+      className="logo-link"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Visit ${label}`}
+    >
+      <img
+        className={imageClassName}
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+      />
+    </a>
+  );
+}
+
+const placeIcons = {
+  dc: {
+    label: "District of Columbia",
+    viewBox: "0 0 60 80",
+    path: "M56.4 36.8l-34.16-34.24-18.24 18.56 9.84 8.32 2.24 2.96 10.32 6.48 1.76 16v10.8z",
+  },
+  mn: {
+    label: "Minnesota",
+    viewBox: "0 -1 64 81",
+    path: "M18.24 4.48l-0.24-1.44-14-0.48 0.8 4-0.4 1.28v4.32l1.76 5.92-0.16 6.72 0.4 0.8-0.24 3.12 1.44 5.44-0.32 3.44-2.24 2.64 1.12 1.76 1.12 0.56 0.64 0.96-0.8 20 20.8 0.48 21.04-0.08-0.48-4.4-0.8-1.28-2.16-0.64-3.52-3.92-1.6-0.4-0.72-1.12-1.52-0.4-1.84-1.76 0.48-1.76-0.4-1.52 0.4-0.72v-1.52l0.64-1.68-0.64-1.52-1.04-0.08-0.24-1.36 1.68-2.32 3.12-2.08v-6.4h0.48l0.96-1.6 4.4-3.52 4.96-5.6 9.12-4.48-1.68-0.24-0.96 0.32-1.6-1.28-4.48 0.64-1.04-1.68-2.8 2h-2.4l-0.8-0.4-0.32-0.96-1.84-0.56-0.64-1.2-1.52 0.24-0.16 0.88-0.48 0.24-0.96-2.32-1.52-0.16 0.4-0.88-2.24-0.8-2.16-0.24-1.44 0.4-0.4 0.64-1.92 0.08-0.88-1.2-5.36-1.12-0.72-0.64v-0.96h-0.96l-1.04-1.2zM19.6-0.8v2.24l0.96-0.48 0.32-1.04-0.16-0.64z",
+  },
+  il: {
+    label: "Illinois",
+    viewBox: "0 0 44 80",
+    path: "M37.04 0.72l-24.4-0.4 1.68 1.76 0.16 1.36 2.08 1.68-0.32 3.12-2.32 3.44-2.24 1.12-2.96 0.16-0.64 2.08 1.04 1.36 0.24 1.68-2 3.44-2.16 1.12 0.08 2.16-0.96 0.4-0.32 1.12 0.16 2.96 0.96 3.36 5.2 5.28 0.96 4.32 0.64 0.4 1.44-0.88 2.56 1.28-0.4 2.56-1.76 3.52 0.08 1.36 2.16 2.4 1.76 0.72 3.76 3.36v1.68l0.48 1.6-0.48 1.44 0.96 2.48 1.12 0.64-0.32-0.72 0.4-0.16 0.96 1.2h0.4l-0.48-1.04 1.68-1.84 4.4 1.84 0.72-0.24-0.32-3.52 3.6-1.2-0.64-1.68 1.04-1.52-0.48-0.72h0.48l-0.48-0.8h0.48v-1.84l0.88-0.32-0.64-0.16 0.88-0.88-0.72-0.72 0.56-0.88 0.72 0.32 0.96-2.08 1.04-0.48-0.16-0.72 1.44-2.4-0.24-2.16-1.36-1.92 0.8-1.04-0.32-1.36 0.88-0.32-0.08-27.76-2.64-5.92v-3.04z",
+  },
+} as const;
+
+type PlaceIconKey = keyof typeof placeIcons;
+
+function PlaceIcon({ place }: { place: PlaceIconKey }) {
+  const icon = placeIcons[place];
+
+  return (
+    <>
+      <span className="sr-only"> {icon.label}</span>
+      <svg
+        className={`place-icon place-icon-${place}`}
+        viewBox={icon.viewBox}
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d={icon.path} />
+      </svg>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <main className="page">
@@ -50,12 +123,12 @@ export default function Home() {
         <h2>Projects</h2>
         <div className="section-content projects-content">
           <article className="project-entry">
-            <img
-              className="project-logo"
+            <LinkedLogo
+              href="https://ens.domains/"
+              label="Ethereum Name Service website"
+              imageClassName="project-logo"
               src="ens-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -96,12 +169,12 @@ export default function Home() {
           </article>
 
           <article className="project-entry">
-            <img
-              className="project-logo"
+            <LinkedLogo
+              href="https://ensdao.org/"
+              label="ENS DAO website"
+              imageClassName="project-logo"
               src="ens-dao-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -145,12 +218,12 @@ export default function Home() {
           </article>
 
           <article className="project-entry">
-            <img
-              className="project-logo"
+            <LinkedLogo
+              href="https://siwe.xyz/"
+              label="Sign in with Ethereum website"
+              imageClassName="project-logo"
               src="siwe-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -202,12 +275,12 @@ export default function Home() {
           </article>
 
           <article className="project-entry">
-            <img
-              className="project-logo ethid-logo"
+            <LinkedLogo
+              href="https://ethid.org/"
+              label="EthID website"
+              imageClassName="project-logo ethid-logo"
               src="ethid-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -242,19 +315,22 @@ export default function Home() {
               <div className="subprojects">
                 <div className="subproject-list">
                   <article className="subproject-entry">
-                    <img
-                      className="subproject-logo"
+                    <LinkedLogo
+                      href="https://grails.app/"
+                      label="Grails website"
+                      imageClassName="subproject-logo"
                       src="grails-logo.png"
-                      alt=""
-                      width="32"
-                      height="32"
+                      size={32}
                     />
                     <div>
                       <MobileCollapsibleList
                         label="Grails"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3 className="subproject-title">
+                            <h3
+                              className="subproject-title"
+                              aria-label="Grails"
+                            >
                               <a
                                 href="https://grails.app/"
                                 target="_blank"
@@ -262,8 +338,9 @@ export default function Home() {
                               >
                                 Grails
                               </a>
+                              {"\u00A0"}
+                              {toggle}
                             </h3>
-                            {toggle}
                           </div>
                         )}
                       >
@@ -276,19 +353,22 @@ export default function Home() {
                   </article>
 
                   <article className="subproject-entry">
-                    <img
-                      className="subproject-logo"
+                    <LinkedLogo
+                      href="https://efp.app/"
+                      label="Ethereum Follow Protocol website"
+                      imageClassName="subproject-logo"
                       src="efp-logo.png"
-                      alt=""
-                      width="32"
-                      height="32"
+                      size={32}
                     />
                     <div>
                       <MobileCollapsibleList
                         label="Ethereum Follow Protocol"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3 className="subproject-title">
+                            <h3
+                              className="subproject-title"
+                              aria-label="Ethereum Follow Protocol (EFP)"
+                            >
                               <a
                                 href="https://efp.app/"
                                 target="_blank"
@@ -296,8 +376,9 @@ export default function Home() {
                               >
                                 Ethereum Follow Protocol (EFP)
                               </a>
+                              {"\u00A0"}
+                              {toggle}
                             </h3>
-                            {toggle}
                           </div>
                         )}
                       >
@@ -311,19 +392,22 @@ export default function Home() {
                   </article>
 
                   <article className="subproject-entry">
-                    <img
-                      className="subproject-logo"
+                    <LinkedLogo
+                      href="https://ethidentitykit.com/"
+                      label="Ethereum Identity Kit website"
+                      imageClassName="subproject-logo"
                       src="eik-logo.png"
-                      alt=""
-                      width="32"
-                      height="32"
+                      size={32}
                     />
                     <div>
                       <MobileCollapsibleList
                         label="Ethereum Identity Kit"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3 className="subproject-title">
+                            <h3
+                              className="subproject-title"
+                              aria-label="Ethereum Identity Kit (EIK)"
+                            >
                               <a
                                 href="https://ethidentitykit.com/"
                                 target="_blank"
@@ -331,8 +415,9 @@ export default function Home() {
                               >
                                 Ethereum Identity Kit (EIK)
                               </a>
+                              {"\u00A0"}
+                              {toggle}
                             </h3>
-                            {toggle}
                           </div>
                         )}
                       >
@@ -345,19 +430,22 @@ export default function Home() {
                   </article>
 
                   <article className="subproject-entry">
-                    <img
-                      className="subproject-logo"
+                    <LinkedLogo
+                      href="https://x.com/ENSMarketBot"
+                      label="ENSMarketBot on X"
+                      imageClassName="subproject-logo"
                       src="ensmarketbot-logo.png"
-                      alt=""
-                      width="32"
-                      height="32"
+                      size={32}
                     />
                     <div>
                       <MobileCollapsibleList
                         label="ENSMarketBot"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3 className="subproject-title">
+                            <h3
+                              className="subproject-title"
+                              aria-label="ENSMarketBot"
+                            >
                               <a
                                 href="https://x.com/ENSMarketBot"
                                 target="_blank"
@@ -365,8 +453,9 @@ export default function Home() {
                               >
                                 ENSMarketBot
                               </a>
+                              {"\u00A0"}
+                              {toggle}
                             </h3>
-                            {toggle}
                           </div>
                         )}
                       >
@@ -383,12 +472,12 @@ export default function Home() {
           </article>
 
           <article className="project-entry">
-            <img
-              className="project-logo"
+            <LinkedLogo
+              href="https://www.churchpop.com/"
+              label="ChurchPOP website"
+              imageClassName="project-logo"
               src="churchpop-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -462,12 +551,12 @@ export default function Home() {
         <h2>Education</h2>
         <div className="section-content education-list">
           <article className="education-entry">
-            <img
-              className="education-logo education-logo-cua"
+            <LinkedLogo
+              href="https://www.catholic.edu/"
+              label="Catholic University of America website"
+              imageClassName="education-logo education-logo-cua"
               src="logo-catholic-university.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -476,7 +565,8 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Catholic University of America (DC)
+                  Catholic University of America
+                  <PlaceIcon place="dc" />
                 </a>
               </h3>
               <p>
@@ -487,12 +577,12 @@ export default function Home() {
           </article>
 
           <article className="education-entry">
-            <img
-              className="education-logo education-logo-st-thomas"
+            <LinkedLogo
+              href="https://www.stthomas.edu/"
+              label="University of St. Thomas website"
+              imageClassName="education-logo education-logo-st-thomas"
               src="st-thomas-logo.png"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -501,7 +591,8 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  University of St. Thomas (MN)
+                  University of St. Thomas
+                  <PlaceIcon place="mn" />
                 </a>
               </h3>
               <p>
@@ -512,12 +603,12 @@ export default function Home() {
           </article>
 
           <article className="education-entry">
-            <img
-              className="education-logo education-logo-wheaton"
+            <LinkedLogo
+              href="https://www.wheaton.edu/"
+              label="Wheaton College website"
+              imageClassName="education-logo education-logo-wheaton"
               src="logo-wheaton-shield.svg"
-              alt=""
-              width="64"
-              height="64"
+              size={64}
             />
             <div>
               <h3>
@@ -526,7 +617,8 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Wheaton College (IL)
+                  Wheaton College
+                  <PlaceIcon place="il" />
                 </a>
               </h3>
               <p>

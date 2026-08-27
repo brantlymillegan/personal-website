@@ -27,8 +27,8 @@ export default function MobileCollapsibleList({
         className="mobile-collapsible-chevron"
         aria-hidden="true"
         viewBox="0 0 20 20"
-        width="16"
-        height="16"
+        width="12"
+        height="12"
       >
         <path d="m5.5 7.5 4.5 4.5 4.5-4.5" />
       </svg>
