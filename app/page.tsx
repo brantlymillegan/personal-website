@@ -63,11 +63,18 @@ export default function Home() {
                   Ethereum Name Service (ENS)
                 </a>
               </h3>
-              <p className="project-role">
-                Director of Operations{" "}
-                <span className="meta-pill">2019-2022</span>
-              </p>
-              <MobileCollapsibleList label="Ethereum Name Service">
+              <MobileCollapsibleList
+                label="Ethereum Name Service"
+                summary={(toggle) => (
+                  <p className="project-role">
+                    Director of Operations{" "}
+                    <span className="mobile-summary-tail">
+                      <span className="meta-pill">2019-2022</span>
+                      {toggle}
+                    </span>
+                  </p>
+                )}
+              >
                 <li>ENS is the leading blockchain naming system</li>
                 <li>Led the core team during its strongest period of growth</li>
                 <li>Led launch of $ENS token and DAO in late 2021</li>
@@ -96,24 +103,31 @@ export default function Home() {
               <h3>
                 <a href="https://ensdao.org/">ENS DAO</a>
               </h3>
-              <div className="project-roles">
-                <p className="project-role">
-                  Launch lead <span className="meta-pill">2021</span>
-                </p>
-                <p className="project-role">
-                  ENS Foundation, founding director{" "}
-                  <span className="meta-pill">2021 - 2023</span>
-                </p>
-                <p className="project-role">
-                  Security Council{" "}
-                  <span className="meta-pill">2024 - 2026</span>
-                </p>
-                <p className="project-role">
-                  Top Delegate{" "}
-                  <span className="meta-pill">2021 - 2026</span>
-                </p>
-              </div>
-              <MobileCollapsibleList label="ENS DAO">
+              <MobileCollapsibleList
+                label="ENS DAO"
+                summary={(toggle) => (
+                  <div className="project-roles">
+                    <p className="project-role">
+                      Launch lead <span className="meta-pill">2021</span>
+                    </p>
+                    <p className="project-role">
+                      ENS Foundation, founding director{" "}
+                      <span className="meta-pill">2021 - 2023</span>
+                    </p>
+                    <p className="project-role">
+                      Security Council{" "}
+                      <span className="meta-pill">2024 - 2026</span>
+                    </p>
+                    <p className="project-role">
+                      Top Delegate{" "}
+                      <span className="mobile-summary-tail">
+                        <span className="meta-pill">2021 - 2026</span>
+                        {toggle}
+                      </span>
+                    </p>
+                  </div>
+                )}
+              >
                 <li>DAO manages key components of the ENS protocol</li>
                 <li>$ENS token voting</li>
               </MobileCollapsibleList>
@@ -132,26 +146,35 @@ export default function Home() {
               <h3>
                 <a href="https://siwe.xyz/">Sign in with Ethereum (SIWE)</a>
               </h3>
-              <div className="project-roles">
-                <p className="project-role">
-                  Creator <span className="meta-pill">2021</span>
-                </p>
-                <p className="project-role">
-                  <a
-                    href="https://eips.ethereum.org/EIPS/eip-4361"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    EIP 4361
-                  </a>{" "}
-                  co-author <span className="meta-pill">2021</span>
-                </p>
-                <p className="project-role">
-                  Project Director{" "}
-                  <span className="meta-pill">2021-2022, 2025-2026</span>
-                </p>
-              </div>
-              <MobileCollapsibleList label="Sign in with Ethereum">
+              <MobileCollapsibleList
+                label="Sign in with Ethereum"
+                summary={(toggle) => (
+                  <div className="project-roles">
+                    <p className="project-role">
+                      Creator <span className="meta-pill">2021</span>
+                    </p>
+                    <p className="project-role">
+                      <a
+                        href="https://eips.ethereum.org/EIPS/eip-4361"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        EIP 4361
+                      </a>{" "}
+                      co-author <span className="meta-pill">2021</span>
+                    </p>
+                    <p className="project-role">
+                      Project Director{" "}
+                      <span className="mobile-summary-tail">
+                        <span className="meta-pill">
+                          2021-2022, 2025-2026
+                        </span>
+                        {toggle}
+                      </span>
+                    </p>
+                  </div>
+                )}
+              >
                 <li>Authentication standard for Ethereum accounts</li>
                 <li>Used by MetaMask, OpenRouter, Polymarket, and more</li>
               </MobileCollapsibleList>
@@ -170,11 +193,18 @@ export default function Home() {
               <h3>
                 <a href="https://ethid.org/">EthID</a>
               </h3>
-              <p className="project-role">
-                Founder, Executive Director{" "}
-                <span className="meta-pill">2024 - 2026</span>
-              </p>
-              <MobileCollapsibleList label="EthID">
+              <MobileCollapsibleList
+                label="EthID"
+                summary={(toggle) => (
+                  <p className="project-role">
+                    Founder, Executive Director{" "}
+                    <span className="mobile-summary-tail">
+                      <span className="meta-pill">2024 - 2026</span>
+                      {toggle}
+                    </span>
+                  </p>
+                )}
+              >
                 <li>
                   Dedicated to developing the Ethereum identity stack
                 </li>
@@ -194,10 +224,14 @@ export default function Home() {
                       height="32"
                     />
                     <div>
-                      <h3 className="subproject-title">
-                        <a href="https://grails.app/">Grails</a>
-                      </h3>
-                      <MobileCollapsibleList label="Grails">
+                      <MobileCollapsibleList
+                        label="Grails"
+                        summary={(toggle) => (
+                          <h3 className="subproject-title">
+                            <a href="https://grails.app/">Grails</a> {toggle}
+                          </h3>
+                        )}
+                      >
                         <li>
                           Best bulk management tool and secondary market for
                           ENS names
@@ -215,12 +249,17 @@ export default function Home() {
                       height="32"
                     />
                     <div>
-                      <h3 className="subproject-title">
-                        <a href="https://efp.app/">
-                          Ethereum Follow Protocol (EFP)
-                        </a>
-                      </h3>
-                      <MobileCollapsibleList label="Ethereum Follow Protocol">
+                      <MobileCollapsibleList
+                        label="Ethereum Follow Protocol"
+                        summary={(toggle) => (
+                          <h3 className="subproject-title">
+                            <a href="https://efp.app/">
+                              Ethereum Follow Protocol (EFP)
+                            </a>{" "}
+                            {toggle}
+                          </h3>
+                        )}
+                      >
                         <li>
                           Onchain social graph protocol for Ethereum accounts,
                           a primitive of the Ethereum identity stack that
@@ -239,12 +278,17 @@ export default function Home() {
                       height="32"
                     />
                     <div>
-                      <h3 className="subproject-title">
-                        <a href="https://ethidentitykit.com/">
-                          Ethereum Identity Kit (EIK)
-                        </a>
-                      </h3>
-                      <MobileCollapsibleList label="Ethereum Identity Kit">
+                      <MobileCollapsibleList
+                        label="Ethereum Identity Kit"
+                        summary={(toggle) => (
+                          <h3 className="subproject-title">
+                            <a href="https://ethidentitykit.com/">
+                              Ethereum Identity Kit (EIK)
+                            </a>{" "}
+                            {toggle}
+                          </h3>
+                        )}
+                      >
                         <li>
                           Component library and API for integrating the Ethereum
                           identity stack
@@ -262,10 +306,17 @@ export default function Home() {
                       height="32"
                     />
                     <div>
-                      <h3 className="subproject-title">
-                        <a href="https://x.com/ENSMarketBot">ENSMarketBot</a>
-                      </h3>
-                      <MobileCollapsibleList label="ENSMarketBot">
+                      <MobileCollapsibleList
+                        label="ENSMarketBot"
+                        summary={(toggle) => (
+                          <h3 className="subproject-title">
+                            <a href="https://x.com/ENSMarketBot">
+                              ENSMarketBot
+                            </a>{" "}
+                            {toggle}
+                          </h3>
+                        )}
+                      >
                         <li>
                           Best Twitter bot tracking significant ENS name sales,
                           offers, and registrations
@@ -290,11 +341,18 @@ export default function Home() {
               <h3>
                 <a href="https://www.churchpop.com/">ChurchPOP</a>
               </h3>
-              <p className="project-role">
-                Founder and Editor-in-Chief{" "}
-                <span className="meta-pill">2014 - 2022</span>
-              </p>
-              <MobileCollapsibleList label="ChurchPOP">
+              <MobileCollapsibleList
+                label="ChurchPOP"
+                summary={(toggle) => (
+                  <p className="project-role">
+                    Founder and Editor-in-Chief{" "}
+                    <span className="mobile-summary-tail">
+                      <span className="meta-pill">2014 - 2022</span>
+                      {toggle}
+                    </span>
+                  </p>
+                )}
+              >
                 <li>
                   Catholic culture brand that’s fun, informative, and
                   inspirational
@@ -319,10 +377,18 @@ export default function Home() {
             />
             <div>
               <h3>Second Nature Journal</h3>
-              <p className="project-role">
-                Co-Founder, Editor <span className="meta-pill">2013</span>
-              </p>
-              <MobileCollapsibleList label="Second Nature Journal">
+              <MobileCollapsibleList
+                label="Second Nature Journal"
+                summary={(toggle) => (
+                  <p className="project-role">
+                    Co-Founder, Editor{" "}
+                    <span className="mobile-summary-tail">
+                      <span className="meta-pill">2013</span>
+                      {toggle}
+                    </span>
+                  </p>
+                )}
+              >
                 <li>
                   Online journal for critical thinking about technology and new
                   media in light of the Christian tradition.

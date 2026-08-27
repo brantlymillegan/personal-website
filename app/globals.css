@@ -44,6 +44,12 @@
   box-sizing: border-box;
 }
 
+img {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 html {
   background: var(--background);
   font-size: 135%;
@@ -191,19 +197,8 @@ body {
   animation: theme-icon-arrive 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .theme-menu-options,
-  .theme-trigger,
-  .theme-trigger-symbol,
-  .theme-option,
-  .mobile-collapsible-caret {
-    animation: none;
-    transition: none;
-  }
-}
-
 header {
-  margin-bottom: 96px;
+  margin-bottom: 30px;
 }
 
 h1 {
@@ -229,9 +224,7 @@ h1 {
   font-size: 0.95rem;
   font-weight: 500;
   gap: 0.45em;
-  text-decoration-color: var(--border);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+  text-decoration: none;
 }
 
 .social-link:hover {
@@ -415,13 +408,7 @@ h2 {
 .project-entry a,
 .education-entry a {
   color: inherit;
-  text-decoration-color: var(--muted);
-  text-underline-offset: 0.16em;
-}
-
-.project-entry a:hover,
-.education-entry a:hover {
-  text-decoration-color: var(--text);
+  text-decoration: none;
 }
 
 .education-list {
@@ -478,7 +465,7 @@ p {
   }
 
   header {
-    margin-bottom: 64px;
+    margin-bottom: 30px;
   }
 
   section {
@@ -499,11 +486,16 @@ p {
     width: 56px;
   }
 
+  .projects-content {
+    gap: 44px;
+  }
+
   .mobile-collapsible {
-    margin-top: 4px;
+    margin-top: 0;
   }
 
   .mobile-collapsible-toggle {
+    -webkit-tap-highlight-color: transparent;
     align-items: center;
     appearance: none;
     background: transparent;
@@ -511,16 +503,37 @@ p {
     border-radius: 999px;
     color: var(--muted);
     cursor: pointer;
-    display: flex;
-    height: 36px;
+    display: inline-flex;
+    height: 32px;
     justify-content: center;
-    margin-left: -9px;
+    margin: -1px 0;
     padding: 0;
-    width: 36px;
+    position: relative;
+    touch-action: manipulation;
+    user-select: none;
+    vertical-align: middle;
+    width: 32px;
+  }
+
+  .mobile-collapsible-toggle::before {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: inherit;
+    content: "";
+    inset: 2px;
+    position: absolute;
   }
 
   .mobile-collapsible-toggle:hover {
     color: var(--text);
+  }
+
+  .mobile-collapsible-toggle:hover::before {
+    border-color: color-mix(in srgb, var(--text) 24%, var(--border));
+  }
+
+  .mobile-collapsible-toggle:active {
+    transform: scale(0.94);
   }
 
   .mobile-collapsible-toggle:focus-visible {
@@ -528,27 +541,48 @@ p {
     outline-offset: 1px;
   }
 
-  .mobile-collapsible-caret {
-    border-bottom: 1.5px solid currentColor;
-    border-right: 1.5px solid currentColor;
+  .mobile-collapsible-chevron {
     display: block;
-    height: 0.45rem;
-    transform: rotate(45deg);
-    transition: transform 180ms ease;
-    width: 0.45rem;
+    fill: none;
+    pointer-events: none;
+    position: relative;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+    transform: rotate(0);
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
   }
 
-  .mobile-collapsible.is-open .mobile-collapsible-caret {
-    transform: rotate(225deg);
+  .mobile-collapsible.is-open .mobile-collapsible-chevron {
+    transform: rotate(180deg);
   }
 
-  .project-entry .mobile-collapsible > ul {
-    display: none;
-    margin-top: 2px;
+  .project-entry .mobile-collapsible-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      grid-template-rows 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      margin-top 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 140ms ease,
+      transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .project-entry .mobile-collapsible.is-open > ul {
-    display: block;
+  .project-entry .mobile-collapsible-content > ul {
+    margin-top: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .project-entry .mobile-collapsible.is-open > .mobile-collapsible-content {
+    grid-template-rows: 1fr;
+    margin-top: 6px;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .subproject-entry {
@@ -556,11 +590,29 @@ p {
     grid-template-columns: 28px minmax(0, 1fr);
   }
 
+  .project-entry .subproject-title {
+    align-items: end;
+    column-gap: 0.08em;
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    max-width: 100%;
+    width: max-content;
+  }
+
+  .mobile-summary-tail {
+    white-space: nowrap;
+  }
+
+  .mobile-summary-tail .mobile-collapsible-toggle {
+    margin-left: 0.18em;
+  }
+
   .subprojects {
     margin-left: -44px;
   }
 
   .subproject-list {
+    gap: 18px;
     padding-left: 24px;
   }
 
@@ -578,5 +630,17 @@ p {
   .subproject-logo {
     height: 28px;
     width: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-menu-options,
+  .theme-trigger,
+  .theme-trigger-symbol,
+  .theme-option,
+  .mobile-collapsible-chevron,
+  .mobile-collapsible-content {
+    animation: none;
+    transition: none;
   }
 }

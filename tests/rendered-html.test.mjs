@@ -224,7 +224,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, />Grails</);
   assert.match(
     html,
-    /class="subproject-title"><a href="https:\/\/grails\.app\/">Grails<\/a><\/h3>/,
+    /class="subproject-title"><a href="https:\/\/grails\.app\/">Grails<\/a> <button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /grails-logo\.png/);
   assert.doesNotMatch(html, /Creator, Project Director/);
@@ -236,7 +236,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, /Ethereum Follow Protocol \(EFP\)/);
   assert.match(
     html,
-    /class="subproject-title"><a href="https:\/\/efp\.app\/">Ethereum Follow Protocol \(EFP\)<\/a><\/h3>/,
+    /class="subproject-title"><a href="https:\/\/efp\.app\/">Ethereum Follow Protocol \(EFP\)<\/a> <button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /efp-logo\.png/);
   assert.doesNotMatch(html, /class="meta-pill">2023<\/span>/);
