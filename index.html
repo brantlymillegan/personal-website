@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Brantly Millegan</title>
+    <meta
+      name="description"
+      content="Projects and education from Brantly Millegan."
+    />
+    <link rel="canonical" href="https://brantly.com/" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://brantly.com/" />
+    <meta property="og:title" content="Brantly Millegan" />
+    <meta
+      property="og:description"
+      content="Projects and education from Brantly Millegan."
+    />
+    <meta property="og:image" content="https://brantly.com/og.png" />
+    <meta property="og:image:width" content="1729" />
+    <meta property="og:image:height" content="910" />
+    <meta
+      property="og:image:alt"
+      content="Brantly Millegan — Projects, education, and about me."
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Brantly Millegan" />
+    <meta
+      name="twitter:description"
+      content="Projects and education from Brantly Millegan."
+    />
+    <meta name="twitter:image" content="https://brantly.com/og.png" />
+
+    <script>
+      try {
+        const theme = localStorage.getItem("brantly-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch (error) {
+        // Local storage may be unavailable; the system theme remains the default.
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>
