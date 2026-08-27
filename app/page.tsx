@@ -59,7 +59,11 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://ens.domains/">
+                <a
+                  href="https://ens.domains/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Ethereum Name Service (ENS)
                 </a>
               </h3>
@@ -101,7 +105,13 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://ensdao.org/">ENS DAO</a>
+                <a
+                  href="https://ensdao.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ENS DAO
+                </a>
               </h3>
               <MobileCollapsibleList
                 label="ENS DAO"
@@ -144,7 +154,13 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://siwe.xyz/">Sign in with Ethereum (SIWE)</a>
+                <a
+                  href="https://siwe.xyz/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Sign in with Ethereum (SIWE)
+                </a>
               </h3>
               <MobileCollapsibleList
                 label="Sign in with Ethereum"
@@ -165,10 +181,14 @@ export default function Home() {
                     </p>
                     <p className="project-role">
                       Project Director{" "}
+                      <span className="meta-pill">
+                        2021-2022, 2025-2026
+                      </span>
+                    </p>
+                    <p className="project-role">
+                      Advisor{" "}
                       <span className="mobile-summary-tail">
-                        <span className="meta-pill">
-                          2021-2022, 2025-2026
-                        </span>
+                        <span className="meta-pill">2026 - present</span>
                         {toggle}
                       </span>
                     </p>
@@ -191,7 +211,13 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://ethid.org/">EthID</a>
+                <a
+                  href="https://ethid.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  EthID
+                </a>
               </h3>
               <MobileCollapsibleList
                 label="EthID"
@@ -227,9 +253,18 @@ export default function Home() {
                       <MobileCollapsibleList
                         label="Grails"
                         summary={(toggle) => (
-                          <h3 className="subproject-title">
-                            <a href="https://grails.app/">Grails</a> {toggle}
-                          </h3>
+                          <div className="subproject-summary">
+                            <h3 className="subproject-title">
+                              <a
+                                href="https://grails.app/"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Grails
+                              </a>
+                            </h3>
+                            {toggle}
+                          </div>
                         )}
                       >
                         <li>
@@ -252,12 +287,18 @@ export default function Home() {
                       <MobileCollapsibleList
                         label="Ethereum Follow Protocol"
                         summary={(toggle) => (
-                          <h3 className="subproject-title">
-                            <a href="https://efp.app/">
-                              Ethereum Follow Protocol (EFP)
-                            </a>{" "}
+                          <div className="subproject-summary">
+                            <h3 className="subproject-title">
+                              <a
+                                href="https://efp.app/"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Ethereum Follow Protocol (EFP)
+                              </a>
+                            </h3>
                             {toggle}
-                          </h3>
+                          </div>
                         )}
                       >
                         <li>
@@ -281,12 +322,18 @@ export default function Home() {
                       <MobileCollapsibleList
                         label="Ethereum Identity Kit"
                         summary={(toggle) => (
-                          <h3 className="subproject-title">
-                            <a href="https://ethidentitykit.com/">
-                              Ethereum Identity Kit (EIK)
-                            </a>{" "}
+                          <div className="subproject-summary">
+                            <h3 className="subproject-title">
+                              <a
+                                href="https://ethidentitykit.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Ethereum Identity Kit (EIK)
+                              </a>
+                            </h3>
                             {toggle}
-                          </h3>
+                          </div>
                         )}
                       >
                         <li>
@@ -309,12 +356,18 @@ export default function Home() {
                       <MobileCollapsibleList
                         label="ENSMarketBot"
                         summary={(toggle) => (
-                          <h3 className="subproject-title">
-                            <a href="https://x.com/ENSMarketBot">
-                              ENSMarketBot
-                            </a>{" "}
+                          <div className="subproject-summary">
+                            <h3 className="subproject-title">
+                              <a
+                                href="https://x.com/ENSMarketBot"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                ENSMarketBot
+                              </a>
+                            </h3>
                             {toggle}
-                          </h3>
+                          </div>
                         )}
                       >
                         <li>
@@ -339,7 +392,13 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://www.churchpop.com/">ChurchPOP</a>
+                <a
+                  href="https://www.churchpop.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  ChurchPOP
+                </a>
               </h3>
               <MobileCollapsibleList
                 label="ChurchPOP"
@@ -404,7 +463,7 @@ export default function Home() {
         <div className="section-content education-list">
           <article className="education-entry">
             <img
-              className="education-logo"
+              className="education-logo education-logo-cua"
               src="logo-catholic-university.png"
               alt=""
               width="64"
@@ -412,20 +471,24 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://www.catholic.edu/">
+                <a
+                  href="https://www.catholic.edu/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Catholic University of America (DC)
                 </a>
               </h3>
               <p>
                 Ph.D. coursework, Moral Theology{" "}
-                <span className="meta-pill">Not completed</span>
+                <span className="meta-pill">INC</span>
               </p>
             </div>
           </article>
 
           <article className="education-entry">
             <img
-              className="education-logo"
+              className="education-logo education-logo-st-thomas"
               src="st-thomas-logo.png"
               alt=""
               width="64"
@@ -433,7 +496,11 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://www.stthomas.edu/">
+                <a
+                  href="https://www.stthomas.edu/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   University of St. Thomas (MN)
                 </a>
               </h3>
@@ -446,7 +513,7 @@ export default function Home() {
 
           <article className="education-entry">
             <img
-              className="education-logo"
+              className="education-logo education-logo-wheaton"
               src="logo-wheaton-shield.svg"
               alt=""
               width="64"
@@ -454,7 +521,13 @@ export default function Home() {
             />
             <div>
               <h3>
-                <a href="https://www.wheaton.edu/">Wheaton College (IL)</a>
+                <a
+                  href="https://www.wheaton.edu/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Wheaton College (IL)
+                </a>
               </h3>
               <p>
                 B.A., Philosophy{" "}

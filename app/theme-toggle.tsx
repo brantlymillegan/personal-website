@@ -116,6 +116,24 @@ export default function ThemeToggle() {
       data-active-theme={theme}
       ref={toggleRef}
     >
+      <button
+        className="theme-trigger"
+        type="button"
+        ref={triggerRef}
+        aria-controls={optionsId}
+        aria-expanded={isOpen}
+        aria-label={`${selectedTheme.label} theme. ${isOpen ? "Close" : "Open"} theme options`}
+        title={`${selectedTheme.label} theme`}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span
+          className="theme-symbol theme-trigger-symbol"
+          aria-hidden="true"
+          key={theme}
+        >
+          {selectedTheme.symbol}
+        </span>
+      </button>
       <div
         className="theme-menu-options"
         id={optionsId}
@@ -139,24 +157,6 @@ export default function ThemeToggle() {
           </button>
         ))}
       </div>
-      <button
-        className="theme-trigger"
-        type="button"
-        ref={triggerRef}
-        aria-controls={optionsId}
-        aria-expanded={isOpen}
-        aria-label={`${selectedTheme.label} theme. ${isOpen ? "Close" : "Open"} theme options`}
-        title={`${selectedTheme.label} theme`}
-        onClick={() => setIsOpen((current) => !current)}
-      >
-        <span
-          className="theme-symbol theme-trigger-symbol"
-          aria-hidden="true"
-          key={theme}
-        >
-          {selectedTheme.symbol}
-        </span>
-      </button>
     </div>
   );
 }

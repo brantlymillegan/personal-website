@@ -75,6 +75,12 @@ test("pre-renders Brantly's static personal website", async () => {
       ),
     );
   }
+  const externalLinks = html.match(/<a\b[^>]*href="https:[^>]*>/g) ?? [];
+  assert.equal(externalLinks.length, 14);
+  for (const link of externalLinks) {
+    assert.match(link, /target="_blank"/);
+    assert.match(link, /rel="noreferrer"/);
+  }
   assert.equal(html.match(/<h3[^>]*><a href=/g)?.length, titleLinks.length);
   assert.match(html, /Ethereum Name Service \(ENS\)/);
   assert.match(html, /ens-logo\.png/);
@@ -181,6 +187,9 @@ test("pre-renders Brantly's static personal website", async () => {
   );
   assert.match(html, /Project Director/);
   assert.match(html, /class="meta-pill">2021-2022, 2025-2026<\/span>/);
+  assert.match(html, /Advisor/);
+  assert.match(html, /class="meta-pill">2026 - present<\/span>/);
+  assert.ok(html.indexOf("Project Director") < html.indexOf("Advisor"));
   assert.ok(html.indexOf("EIP 4361") < html.indexOf("Project Director"));
   assert.match(
     html,
@@ -224,7 +233,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, />Grails</);
   assert.match(
     html,
-    /class="subproject-title"><a href="https:\/\/grails\.app\/">Grails<\/a> <button class="mobile-collapsible-toggle"/,
+    /class="subproject-summary"><h3 class="subproject-title"><a href="https:\/\/grails\.app\/"[^>]*>Grails<\/a><\/h3><button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /grails-logo\.png/);
   assert.doesNotMatch(html, /Creator, Project Director/);
@@ -236,7 +245,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, /Ethereum Follow Protocol \(EFP\)/);
   assert.match(
     html,
-    /class="subproject-title"><a href="https:\/\/efp\.app\/">Ethereum Follow Protocol \(EFP\)<\/a> <button class="mobile-collapsible-toggle"/,
+    /class="subproject-summary"><h3 class="subproject-title"><a href="https:\/\/efp\.app\/"[^>]*>Ethereum Follow Protocol \(EFP\)<\/a><\/h3><button class="mobile-collapsible-toggle"/,
   );
   assert.match(html, /efp-logo\.png/);
   assert.doesNotMatch(html, /class="meta-pill">2023<\/span>/);
@@ -273,7 +282,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, /logo-catholic-university\.png/);
   assert.match(html, /class="meta-pill">2010<\/span>/);
   assert.match(html, /class="meta-pill">2015<\/span>/);
-  assert.match(html, /class="meta-pill">Not completed<\/span>/);
+  assert.match(html, /class="meta-pill">INC<\/span>/);
   assert.doesNotMatch(html, /\(not completed\)/);
   assert.doesNotMatch(html, /—\s*(?:2010|2015)/);
   assert.doesNotMatch(html, /I’m Catholic, married, and have a big family\./);
@@ -295,12 +304,19 @@ test("removes all temporary starter preview code", async () => {
   assert.match(page, /Brantly Millegan/);
   assert.match(index, /<title>Brantly Millegan<\/title>/);
   assert.match(index, /rel="canonical" href="https:\/\/brantly\.com\/"/);
-  assert.match(globals, /font-size: 135%/);
-  assert.match(globals, /font-size: clamp\(2\.25rem, 8\.1vw, 3rem\)/);
+  assert.match(globals, /font-size: 121\.5%/);
+  assert.match(globals, /font-size: clamp\(2\.65rem, 7\.8vw, 3\.55rem\)/);
+  assert.match(globals, /--font-display:/);
+  assert.match(globals, /justify-items: start/);
+  assert.match(globals, /visibility: hidden/);
   assert.match(globals, /max-width: 1140px/);
   assert.match(globals, /max-width: 750px/);
   assert.match(globals, /\.project-entry li::before/);
   assert.match(globals, /content: "⟢"/);
+  assert.match(
+    globals,
+    /\.project-logo \{[\s\S]*?outline: 1px solid color-mix/,
+  );
   assert.match(favicon, />⟢<\/text>/);
   assert.match(favicon, /fill="#1b1b1b"/);
   assert.match(themeToggle, /aria-expanded=\{isOpen\}/);
