@@ -8,14 +8,16 @@ import {
 
 type Theme = "system" | "light" | "dark";
 
-const themes: { value: Theme; label: string; symbol: string }[] = [
-  { value: "system", label: "System", symbol: "◐" },
-  { value: "light", label: "Light", symbol: "☀" },
-  { value: "dark", label: "Dark", symbol: "☾" },
+const themes: { value: Theme; label: string }[] = [
+  { value: "system", label: "System" },
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
 ];
 
 const storageKey = "brantly-theme";
 const themeChangeEvent = "brantly-theme-change";
+const lightThemeColor = "#fbfaf7";
+const darkThemeColor = "#25241f";
 
 function getTheme(): Theme {
   try {
@@ -43,12 +45,27 @@ function subscribeToTheme(onThemeChange: () => void) {
   };
 }
 
-function applyTheme(nextTheme: Theme) {
-  if (nextTheme === "system") {
+function updateThemeColor(theme: Theme) {
+  const usesDarkTheme =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  document
+    .querySelector<HTMLMetaElement>("#theme-color")
+    ?.setAttribute("content", usesDarkTheme ? darkThemeColor : lightThemeColor);
+}
+
+function updateDocumentTheme(theme: Theme) {
+  if (theme === "system") {
     document.documentElement.removeAttribute("data-theme");
   } else {
-    document.documentElement.dataset.theme = nextTheme;
+    document.documentElement.dataset.theme = theme;
   }
+}
+
+function applyTheme(nextTheme: Theme) {
+  updateDocumentTheme(nextTheme);
 
   try {
     if (nextTheme === "system") {
@@ -60,7 +77,47 @@ function applyTheme(nextTheme: Theme) {
     // The selected theme still applies for this page if storage is unavailable.
   }
 
+  updateThemeColor(nextTheme);
   window.dispatchEvent(new Event(themeChangeEvent));
+}
+
+function ThemeIcon({ theme }: { theme: Theme }) {
+  const sharedProps = {
+    width: 14,
+    height: 14,
+    viewBox: "0 0 14 14",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.4,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    focusable: false,
+    "aria-hidden": true,
+  };
+
+  if (theme === "light") {
+    return (
+      <svg {...sharedProps}>
+        <circle cx="7" cy="7" r="2.25" />
+        <path d="M7 1v1.25M7 11.75V13M1 7h1.25M11.75 7H13M2.76 2.76l.88.88M10.36 10.36l.88.88M11.24 2.76l-.88.88M3.64 10.36l-.88.88" />
+      </svg>
+    );
+  }
+
+  if (theme === "dark") {
+    return (
+      <svg {...sharedProps}>
+        <path d="M11.9 9.16A5.25 5.25 0 0 1 4.84 2.1 5.25 5.25 0 1 0 11.9 9.16Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...sharedProps}>
+      <rect x="1.25" y="2" width="11.5" height="8" rx="1.25" />
+      <path d="M5 12h4M7 10v2" />
+    </svg>
+  );
 }
 
 export default function ThemeToggle() {
@@ -104,6 +161,24 @@ export default function ThemeToggle() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    updateDocumentTheme(theme);
+    updateThemeColor(theme);
+
+    if (theme !== "system") {
+      return;
+    }
+
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncSystemThemeColor = () => updateThemeColor("system");
+
+    systemTheme.addEventListener("change", syncSystemThemeColor);
+
+    return () => {
+      systemTheme.removeEventListener("change", syncSystemThemeColor);
+    };
+  }, [theme]);
+
   function chooseTheme(nextTheme: Theme) {
     applyTheme(nextTheme);
     setIsOpen(false);
@@ -123,7 +198,6 @@ export default function ThemeToggle() {
         aria-controls={optionsId}
         aria-expanded={isOpen}
         aria-label={`${selectedTheme.label} theme. ${isOpen ? "Close" : "Open"} theme options`}
-        title={`${selectedTheme.label} theme`}
         onClick={() => setIsOpen((current) => !current)}
       >
         <span
@@ -131,7 +205,7 @@ export default function ThemeToggle() {
           aria-hidden="true"
           key={theme}
         >
-          {selectedTheme.symbol}
+          <ThemeIcon theme={selectedTheme.value} />
         </span>
       </button>
       <div
@@ -147,12 +221,11 @@ export default function ThemeToggle() {
             type="button"
             key={option.value}
             aria-label={`Use ${option.label.toLowerCase()} theme`}
-            title={option.label}
             tabIndex={isOpen ? 0 : -1}
             onClick={() => chooseTheme(option.value)}
           >
             <span className="theme-symbol" aria-hidden="true">
-              {option.symbol}
+              <ThemeIcon theme={option.value} />
             </span>
           </button>
         ))}

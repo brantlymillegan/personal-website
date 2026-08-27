@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import MobileCollapsibleList from "./mobile-collapsible-list";
 import ThemeToggle from "./theme-toggle";
 
@@ -74,6 +75,24 @@ function PlaceIcon({ place }: { place: PlaceIconKey }) {
   );
 }
 
+type RoleLineProps = {
+  children: ReactNode;
+  toggle?: ReactNode | null;
+  years: string;
+};
+
+function RoleLine({ children, toggle = null, years }: RoleLineProps) {
+  return (
+    <p className="project-role">
+      <span className="project-role-label">{children}</span>
+      <span className="project-role-meta mobile-summary-tail">
+        <span className="meta-pill">{years}</span>
+        {toggle}
+      </span>
+    </p>
+  );
+}
+
 export default function Home() {
   return (
     <main className="page">
@@ -142,14 +161,13 @@ export default function Home() {
               </h3>
               <MobileCollapsibleList
                 label="Ethereum Name Service"
+                mobileFullWidth
                 summary={(toggle) => (
-                  <p className="project-role">
-                    Director of Operations{" "}
-                    <span className="mobile-summary-tail">
-                      <span className="meta-pill">2019-2022</span>
-                      {toggle}
-                    </span>
-                  </p>
+                  <div className="project-roles">
+                    <RoleLine years="2019 – 2022" toggle={toggle}>
+                      Director of operations
+                    </RoleLine>
+                  </div>
                 )}
               >
                 <li>ENS is the leading blockchain naming system</li>
@@ -188,26 +206,17 @@ export default function Home() {
               </h3>
               <MobileCollapsibleList
                 label="ENS DAO"
+                mobileFullWidth
                 summary={(toggle) => (
                   <div className="project-roles">
-                    <p className="project-role">
-                      Launch lead <span className="meta-pill">2021</span>
-                    </p>
-                    <p className="project-role">
-                      ENS Foundation, founding director{" "}
-                      <span className="meta-pill">2021 - 2023</span>
-                    </p>
-                    <p className="project-role">
-                      Security Council{" "}
-                      <span className="meta-pill">2024 - 2026</span>
-                    </p>
-                    <p className="project-role">
-                      Top Delegate{" "}
-                      <span className="mobile-summary-tail">
-                        <span className="meta-pill">2021 - 2026</span>
-                        {toggle}
-                      </span>
-                    </p>
+                    <RoleLine years="2021">Launch lead</RoleLine>
+                    <RoleLine years="2021 – 2023">
+                      ENS Foundation, founding director
+                    </RoleLine>
+                    <RoleLine years="2024 – 2026">Security Council</RoleLine>
+                    <RoleLine years="2021 – 2026" toggle={toggle}>
+                      Top delegate
+                    </RoleLine>
                   </div>
                 )}
               >
@@ -237,12 +246,11 @@ export default function Home() {
               </h3>
               <MobileCollapsibleList
                 label="Sign in with Ethereum"
+                mobileFullWidth
                 summary={(toggle) => (
                   <div className="project-roles">
-                    <p className="project-role">
-                      Creator <span className="meta-pill">2021</span>
-                    </p>
-                    <p className="project-role">
+                    <RoleLine years="2021">Creator</RoleLine>
+                    <RoleLine years="2021">
                       <a
                         href="https://eips.ethereum.org/EIPS/eip-4361"
                         target="_blank"
@@ -250,21 +258,14 @@ export default function Home() {
                       >
                         EIP 4361
                       </a>{" "}
-                      co-author <span className="meta-pill">2021</span>
-                    </p>
-                    <p className="project-role">
-                      Project Director{" "}
-                      <span className="meta-pill">
-                        2021-2022, 2025-2026
-                      </span>
-                    </p>
-                    <p className="project-role">
-                      Advisor{" "}
-                      <span className="mobile-summary-tail">
-                        <span className="meta-pill">2026 - present</span>
-                        {toggle}
-                      </span>
-                    </p>
+                      co-author
+                    </RoleLine>
+                    <RoleLine years="2021 – 2022 · 2025 – 2026">
+                      Project director
+                    </RoleLine>
+                    <RoleLine years="2026 – present" toggle={toggle}>
+                      Advisor
+                    </RoleLine>
                   </div>
                 )}
               >
@@ -294,14 +295,13 @@ export default function Home() {
               </h3>
               <MobileCollapsibleList
                 label="EthID"
+                mobileFullWidth
                 summary={(toggle) => (
-                  <p className="project-role">
-                    Founder, Executive Director{" "}
-                    <span className="mobile-summary-tail">
-                      <span className="meta-pill">2024 - 2026</span>
-                      {toggle}
-                    </span>
-                  </p>
+                  <div className="project-roles">
+                    <RoleLine years="2024 – 2026" toggle={toggle}>
+                      Founder, executive director
+                    </RoleLine>
+                  </div>
                 )}
               >
                 <li>
@@ -327,7 +327,7 @@ export default function Home() {
                         label="Grails"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3
+                            <h4
                               className="subproject-title"
                               aria-label="Grails"
                             >
@@ -338,9 +338,10 @@ export default function Home() {
                               >
                                 Grails
                               </a>
-                              {"\u00A0"}
+                            </h4>
+                            <span className="mobile-summary-tail">
                               {toggle}
-                            </h3>
+                            </span>
                           </div>
                         )}
                       >
@@ -365,7 +366,7 @@ export default function Home() {
                         label="Ethereum Follow Protocol"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3
+                            <h4
                               className="subproject-title"
                               aria-label="Ethereum Follow Protocol (EFP)"
                             >
@@ -376,16 +377,15 @@ export default function Home() {
                               >
                                 Ethereum Follow Protocol (EFP)
                               </a>
-                              {"\u00A0"}
+                            </h4>
+                            <span className="mobile-summary-tail">
                               {toggle}
-                            </h3>
+                            </span>
                           </div>
                         )}
                       >
                         <li>
-                          Onchain social graph protocol for Ethereum accounts,
-                          a primitive of the Ethereum identity stack that
-                          complements ENS and Sign in with Ethereum.
+                          Onchain social graph protocol for Ethereum accounts
                         </li>
                       </MobileCollapsibleList>
                     </div>
@@ -404,7 +404,7 @@ export default function Home() {
                         label="Ethereum Identity Kit"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3
+                            <h4
                               className="subproject-title"
                               aria-label="Ethereum Identity Kit (EIK)"
                             >
@@ -415,9 +415,10 @@ export default function Home() {
                               >
                                 Ethereum Identity Kit (EIK)
                               </a>
-                              {"\u00A0"}
+                            </h4>
+                            <span className="mobile-summary-tail">
                               {toggle}
-                            </h3>
+                            </span>
                           </div>
                         )}
                       >
@@ -442,7 +443,7 @@ export default function Home() {
                         label="ENSMarketBot"
                         summary={(toggle) => (
                           <div className="subproject-summary">
-                            <h3
+                            <h4
                               className="subproject-title"
                               aria-label="ENSMarketBot"
                             >
@@ -453,9 +454,10 @@ export default function Home() {
                               >
                                 ENSMarketBot
                               </a>
-                              {"\u00A0"}
+                            </h4>
+                            <span className="mobile-summary-tail">
                               {toggle}
-                            </h3>
+                            </span>
                           </div>
                         )}
                       >
@@ -491,14 +493,13 @@ export default function Home() {
               </h3>
               <MobileCollapsibleList
                 label="ChurchPOP"
+                mobileFullWidth
                 summary={(toggle) => (
-                  <p className="project-role">
-                    Founder and Editor-in-Chief{" "}
-                    <span className="mobile-summary-tail">
-                      <span className="meta-pill">2014 - 2022</span>
-                      {toggle}
-                    </span>
-                  </p>
+                  <div className="project-roles">
+                    <RoleLine years="2014 – 2022" toggle={toggle}>
+                      Founder and editor-in-chief
+                    </RoleLine>
+                  </div>
                 )}
               >
                 <li>
@@ -527,19 +528,18 @@ export default function Home() {
               <h3>Second Nature Journal</h3>
               <MobileCollapsibleList
                 label="Second Nature Journal"
+                mobileFullWidth
                 summary={(toggle) => (
-                  <p className="project-role">
-                    Co-Founder, Editor{" "}
-                    <span className="mobile-summary-tail">
-                      <span className="meta-pill">2013</span>
-                      {toggle}
-                    </span>
-                  </p>
+                  <div className="project-roles">
+                    <RoleLine years="2013" toggle={toggle}>
+                      Co-founder, editor
+                    </RoleLine>
+                  </div>
                 )}
               >
                 <li>
                   Online journal for critical thinking about technology and new
-                  media in light of the Christian tradition.
+                  media in light of the Christian tradition
                 </li>
               </MobileCollapsibleList>
             </div>
@@ -629,7 +629,9 @@ export default function Home() {
           </article>
         </div>
       </section>
-
+      <footer className="site-footer">
+        <p>Last updated August 2026</p>
+      </footer>
     </main>
   );
 }

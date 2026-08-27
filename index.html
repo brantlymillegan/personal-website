@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
+    <meta id="theme-color" name="theme-color" content="#fbfaf7" />
     <title>Brantly Millegan</title>
     <meta
       name="description"
@@ -20,11 +21,11 @@
       content="Projects and education from Brantly Millegan."
     />
     <meta property="og:image" content="https://brantly.com/og.png" />
-    <meta property="og:image:width" content="1729" />
-    <meta property="og:image:height" content="910" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Brantly Millegan — Projects, education, and about me."
+      content="Brantly Millegan — Projects and education"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -36,13 +37,27 @@
     <meta name="twitter:image" content="https://brantly.com/og.png" />
 
     <script>
+      let theme = null;
+
       try {
-        const theme = localStorage.getItem("brantly-theme");
+        theme = localStorage.getItem("brantly-theme");
         if (theme === "light" || theme === "dark") {
           document.documentElement.dataset.theme = theme;
         }
       } catch (error) {
         // Local storage may be unavailable; the system theme remains the default.
+      }
+
+      try {
+        const usesDarkTheme =
+          theme === "dark" ||
+          (theme !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document
+          .querySelector("#theme-color")
+          ?.setAttribute("content", usesDarkTheme ? "#25241f" : "#fbfaf7");
+      } catch (error) {
+        // The default light browser chrome remains if media queries are unavailable.
       }
     </script>
   </head>

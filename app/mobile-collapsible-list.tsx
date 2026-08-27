@@ -1,20 +1,24 @@
-import { useId, useState, type ReactNode } from "react";
+import { Children, useId, useState, type ReactNode } from "react";
 
 type MobileCollapsibleListProps = {
   children: ReactNode;
   label: string;
-  summary: (toggle: ReactNode) => ReactNode;
+  mobileFullWidth?: boolean;
+  summary: (toggle: ReactNode | null) => ReactNode;
 };
 
 export default function MobileCollapsibleList({
   children,
   label,
+  mobileFullWidth = false,
   summary,
 }: MobileCollapsibleListProps) {
   const [isOpen, setIsOpen] = useState(false);
   const listId = useId();
+  const items = Children.toArray(children);
+  const hasDetails = items.length > 0;
 
-  const toggle = (
+  const toggle = hasDetails ? (
     <button
       className="mobile-collapsible-toggle"
       type="button"
@@ -33,14 +37,20 @@ export default function MobileCollapsibleList({
         <path d="m5.5 7.5 4.5 4.5 4.5-4.5" />
       </svg>
     </button>
-  );
+  ) : null;
 
   return (
-    <div className={`mobile-collapsible${isOpen ? " is-open" : ""}`}>
+    <div
+      className={`mobile-collapsible${
+        mobileFullWidth ? " mobile-collapsible-full-width" : ""
+      }${hasDetails && isOpen ? " is-open" : ""}`}
+    >
       {summary(toggle)}
-      <div className="mobile-collapsible-content" id={listId}>
-        <ul>{children}</ul>
-      </div>
+      {hasDetails ? (
+        <div className="mobile-collapsible-content" id={listId}>
+          <ul>{items}</ul>
+        </div>
+      ) : null}
     </div>
   );
 }
