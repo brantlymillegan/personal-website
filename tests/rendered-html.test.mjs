@@ -345,7 +345,15 @@ test("pre-renders Brantly's static personal website", async () => {
 });
 
 test("removes all temporary starter preview code", async () => {
-  const [page, index, globals, packageJson, favicon, themeToggle] =
+  const [
+    page,
+    index,
+    globals,
+    packageJson,
+    favicon,
+    themeToggle,
+    mobileCollapsible,
+  ] =
     await Promise.all([
       readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
       readFile(new URL("../index.html", import.meta.url), "utf8"),
@@ -353,6 +361,10 @@ test("removes all temporary starter preview code", async () => {
       readFile(new URL("../package.json", import.meta.url), "utf8"),
       readFile(new URL("../public/favicon.svg", import.meta.url), "utf8"),
       readFile(new URL("../app/theme-toggle.tsx", import.meta.url), "utf8"),
+      readFile(
+        new URL("../app/mobile-collapsible-list.tsx", import.meta.url),
+        "utf8",
+      ),
     ]);
 
   assert.match(page, /Brantly Millegan/);
@@ -382,6 +394,14 @@ test("removes all temporary starter preview code", async () => {
   assert.match(themeToggle, /otherThemes\.map/);
   assert.match(themeToggle, /event\.key === "Escape"/);
   assert.doesNotMatch(themeToggle, /title=/);
+  assert.match(mobileCollapsible, /function handleBulletClick/);
+  assert.match(mobileCollapsible, /setIsOpen\(false\)/);
+  assert.match(mobileCollapsible, /onClick=\{handleBulletClick\}/);
+  assert.match(mobileCollapsible, /target\.closest\("li"\)/);
+  assert.match(
+    mobileCollapsible,
+    /target\.closest\("a, button, input, select, textarea"\)/,
+  );
   assert.match(globals, /\.theme-toggle\.is-open \.theme-menu-options/);
   assert.match(index, /id="theme-color" name="theme-color"/);
   assert.match(index, /og:image:width" content="1200"/);

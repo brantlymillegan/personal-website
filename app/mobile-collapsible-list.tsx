@@ -2,6 +2,7 @@ import {
   Children,
   useId,
   useState,
+  type MouseEvent,
   type ReactNode,
 } from "react";
 
@@ -23,6 +24,30 @@ export default function MobileCollapsibleList({
   const items = Children.toArray(children);
   const hasDetails = items.length > 0;
   const toggleDetails = () => setIsOpen((current) => !current);
+
+  function handleBulletClick(event: MouseEvent<HTMLUListElement>) {
+    if (!isOpen || !window.matchMedia("(max-width: 760px)").matches) {
+      return;
+    }
+
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    if (target.closest("a, button, input, select, textarea")) {
+      return;
+    }
+
+    const item = target.closest("li");
+
+    if (!item || !event.currentTarget.contains(item)) {
+      return;
+    }
+
+    setIsOpen(false);
+  }
 
   const chevron = (
     <svg
@@ -78,7 +103,9 @@ export default function MobileCollapsibleList({
       )}
       {hasDetails ? (
         <div className="mobile-collapsible-content" id={listId}>
-          <ul>{items}</ul>
+          {/* Pointer shortcut; the disclosure button remains keyboard-accessible. */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
+          <ul onClick={handleBulletClick}>{items}</ul>
         </div>
       ) : null}
     </div>

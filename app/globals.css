@@ -881,6 +881,12 @@ p {
     overflow: hidden;
   }
 
+  .mobile-collapsible.is-open .mobile-collapsible-content li {
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
   .project-entry .mobile-collapsible.is-open > .mobile-collapsible-content {
     grid-template-rows: 1fr;
     margin-top: 6px;
