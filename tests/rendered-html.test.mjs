@@ -35,7 +35,16 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.doesNotMatch(html, />About Me</);
   assert.equal(html.match(/class="mobile-collapsible"/g)?.length, 10);
   assert.equal(html.match(/class="mobile-collapsible-toggle"/g)?.length, 10);
-  assert.equal(html.match(/aria-expanded="false"/g)?.length, 10);
+  assert.equal(
+    html.match(
+      /class="mobile-collapsible-toggle"[^>]*aria-expanded="false"/g,
+    )?.length,
+    10,
+  );
+  assert.match(
+    html,
+    /class="theme-trigger"[^>]*aria-expanded="false"/,
+  );
   assert.match(html, /aria-label="Show details for Ethereum Name Service"/);
   assert.match(html, /aria-label="Show details for ENSMarketBot"/);
   const titleLinks = [
@@ -273,13 +282,15 @@ test("pre-renders Brantly's static personal website", async () => {
 });
 
 test("removes all temporary starter preview code", async () => {
-  const [page, index, globals, packageJson, favicon] = await Promise.all([
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../index.html", import.meta.url), "utf8"),
-    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readFile(new URL("../public/favicon.svg", import.meta.url), "utf8"),
-  ]);
+  const [page, index, globals, packageJson, favicon, themeToggle] =
+    await Promise.all([
+      readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../index.html", import.meta.url), "utf8"),
+      readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+      readFile(new URL("../package.json", import.meta.url), "utf8"),
+      readFile(new URL("../public/favicon.svg", import.meta.url), "utf8"),
+      readFile(new URL("../app/theme-toggle.tsx", import.meta.url), "utf8"),
+    ]);
 
   assert.match(page, /Brantly Millegan/);
   assert.match(index, /<title>Brantly Millegan<\/title>/);
@@ -292,6 +303,11 @@ test("removes all temporary starter preview code", async () => {
   assert.match(globals, /content: "⟢"/);
   assert.match(favicon, />⟢<\/text>/);
   assert.match(favicon, /fill="#1b1b1b"/);
+  assert.match(themeToggle, /aria-expanded=\{isOpen\}/);
+  assert.match(themeToggle, /otherThemes\.map/);
+  assert.match(themeToggle, /event\.key === "Escape"/);
+  assert.match(globals, /\.theme-toggle\.is-open \.theme-menu-options/);
+  assert.doesNotMatch(globals, /\.theme-indicator/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(
     packageJson,

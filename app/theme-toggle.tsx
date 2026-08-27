@@ -1,4 +1,10 @@
-import { useSyncExternalStore } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 type Theme = "system" | "light" | "dark";
 
@@ -58,39 +64,99 @@ function applyTheme(nextTheme: Theme) {
 }
 
 export default function ThemeToggle() {
+  const [isOpen, setIsOpen] = useState(false);
   const theme = useSyncExternalStore(
     subscribeToTheme,
     getTheme,
     getServerTheme,
   );
+  const optionsId = useId();
+  const toggleRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const selectedTheme =
+    themes.find((option) => option.value === theme) ?? themes[0];
+  const otherThemes = themes.filter((option) => option.value !== theme);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    function closeOnOutsidePress(event: PointerEvent) {
+      if (!toggleRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsidePress);
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePress);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isOpen]);
 
   function chooseTheme(nextTheme: Theme) {
     applyTheme(nextTheme);
+    setIsOpen(false);
+    triggerRef.current?.focus();
   }
 
   return (
     <div
-      className="theme-toggle"
-      role="group"
-      aria-label="Color theme"
+      className={`theme-toggle${isOpen ? " is-open" : ""}`}
       data-active-theme={theme}
+      ref={toggleRef}
     >
-      <span className="theme-indicator" aria-hidden="true" />
-      {themes.map((option) => (
-        <button
-          className="theme-option"
-          type="button"
-          key={option.value}
-          aria-label={`${option.label} theme`}
-          aria-pressed={theme === option.value}
-          title={option.label}
-          onClick={() => chooseTheme(option.value)}
+      <div
+        className="theme-menu-options"
+        id={optionsId}
+        role="group"
+        aria-label="Choose color theme"
+        aria-hidden={!isOpen}
+      >
+        {otherThemes.map((option) => (
+          <button
+            className="theme-option"
+            type="button"
+            key={option.value}
+            aria-label={`Use ${option.label.toLowerCase()} theme`}
+            title={option.label}
+            tabIndex={isOpen ? 0 : -1}
+            onClick={() => chooseTheme(option.value)}
+          >
+            <span className="theme-symbol" aria-hidden="true">
+              {option.symbol}
+            </span>
+          </button>
+        ))}
+      </div>
+      <button
+        className="theme-trigger"
+        type="button"
+        ref={triggerRef}
+        aria-controls={optionsId}
+        aria-expanded={isOpen}
+        aria-label={`${selectedTheme.label} theme. ${isOpen ? "Close" : "Open"} theme options`}
+        title={`${selectedTheme.label} theme`}
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        <span
+          className="theme-symbol theme-trigger-symbol"
+          aria-hidden="true"
+          key={theme}
         >
-          <span className="theme-symbol" aria-hidden="true">
-            {option.symbol}
-          </span>
-        </button>
-      ))}
+          {selectedTheme.symbol}
+        </span>
+      </button>
     </div>
   );
 }
