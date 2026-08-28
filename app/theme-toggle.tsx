@@ -4,9 +4,11 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type PointerEvent as ReactPointerEvent,
 } from "react";
 
 type Theme = "system" | "light" | "dark";
+type OpenMode = "closed" | "hover" | "pinned";
 
 const themes: { value: Theme; label: string }[] = [
   { value: "system", label: "System" },
@@ -121,7 +123,7 @@ function ThemeIcon({ theme }: { theme: Theme }) {
 }
 
 export default function ThemeToggle() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openMode, setOpenMode] = useState<OpenMode>("closed");
   const theme = useSyncExternalStore(
     subscribeToTheme,
     getTheme,
@@ -133,6 +135,13 @@ export default function ThemeToggle() {
   const selectedTheme =
     themes.find((option) => option.value === theme) ?? themes[0];
   const otherThemes = themes.filter((option) => option.value !== theme);
+  const isOpen = openMode !== "closed";
+  const triggerAction =
+    openMode === "closed"
+      ? "Open theme options"
+      : openMode === "hover"
+        ? "Keep theme options open"
+        : "Theme options pinned open";
 
   useEffect(() => {
     if (!isOpen) {
@@ -141,13 +150,13 @@ export default function ThemeToggle() {
 
     function closeOnOutsidePress(event: PointerEvent) {
       if (!toggleRef.current?.contains(event.target as Node)) {
-        setIsOpen(false);
+        setOpenMode("closed");
       }
     }
 
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        setOpenMode("closed");
         triggerRef.current?.focus();
       }
     }
@@ -181,8 +190,20 @@ export default function ThemeToggle() {
 
   function chooseTheme(nextTheme: Theme) {
     applyTheme(nextTheme);
-    setIsOpen(false);
+    setOpenMode("closed");
     triggerRef.current?.focus();
+  }
+
+  function openOnMouseHover(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType === "mouse") {
+      setOpenMode((current) => (current === "pinned" ? current : "hover"));
+    }
+  }
+
+  function closeMouseHover(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType === "mouse") {
+      setOpenMode((current) => (current === "hover" ? "closed" : current));
+    }
   }
 
   return (
@@ -190,6 +211,8 @@ export default function ThemeToggle() {
       className={`theme-toggle${isOpen ? " is-open" : ""}`}
       data-active-theme={theme}
       ref={toggleRef}
+      onPointerEnter={openOnMouseHover}
+      onPointerLeave={closeMouseHover}
     >
       <button
         className="theme-trigger"
@@ -197,8 +220,8 @@ export default function ThemeToggle() {
         ref={triggerRef}
         aria-controls={optionsId}
         aria-expanded={isOpen}
-        aria-label={`${selectedTheme.label} theme. ${isOpen ? "Close" : "Open"} theme options`}
-        onClick={() => setIsOpen((current) => !current)}
+        aria-label={`${selectedTheme.label} theme. ${triggerAction}`}
+        onClick={() => setOpenMode("pinned")}
       >
         <span
           className="theme-symbol theme-trigger-symbol"

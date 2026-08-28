@@ -393,6 +393,13 @@ test("removes all temporary starter preview code", async () => {
   assert.match(themeToggle, /function ThemeIcon/);
   assert.match(themeToggle, /otherThemes\.map/);
   assert.match(themeToggle, /event\.key === "Escape"/);
+  assert.match(themeToggle, /type OpenMode = "closed" \| "hover" \| "pinned"/);
+  assert.match(themeToggle, /const isOpen = openMode !== "closed"/);
+  assert.match(themeToggle, /onPointerEnter=\{openOnMouseHover\}/);
+  assert.match(themeToggle, /onPointerLeave=\{closeMouseHover\}/);
+  assert.match(themeToggle, /event\.pointerType === "mouse"/);
+  assert.match(themeToggle, /onClick=\{\(\) => setOpenMode\("pinned"\)\}/);
+  assert.match(themeToggle, /Theme options pinned open/);
   assert.doesNotMatch(themeToggle, /title=/);
   assert.match(mobileCollapsible, /function handleBulletClick/);
   assert.match(mobileCollapsible, /setIsOpen\(false\)/);
