@@ -125,7 +125,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, /aria-label="Visit Wheaton College website"/);
   assert.match(html, /Ethereum Name Service \(ENS\)/);
   assert.match(html, /ens-logo\.png/);
-  assert.match(html, /Director of operations/);
+  assert.match(html, /Director of Operations/);
   assert.match(html, /class="meta-pill">2019 – 2022<\/span>/);
   assert.match(html, /ENS is the leading blockchain naming system/);
   assert.match(html, /Led the core team during its strongest period of growth/);
@@ -145,18 +145,18 @@ test("pre-renders Brantly's static personal website", async () => {
   );
   assert.match(html, /ENS DAO/);
   assert.match(html, /ens-dao-logo\.png/);
-  assert.match(html, /Launch lead/);
-  assert.match(html, /Top delegate/);
+  assert.match(html, /Launch Lead/);
+  assert.match(html, /Top Delegate/);
   assert.match(html, /class="meta-pill">2021 – 2026<\/span>/);
   assert.match(html, /Security Council/);
   assert.match(html, /class="meta-pill">2024 – 2026<\/span>/);
-  assert.match(html, /ENS Foundation, founding director/);
+  assert.match(html, /ENS Foundation, Founding Director/);
   assert.match(html, /class="meta-pill">2021 – 2023<\/span>/);
   assert.ok(
-    html.indexOf("ENS Foundation, founding director") <
+    html.indexOf("ENS Foundation, Founding Director") <
       html.indexOf("Security Council"),
   );
-  assert.ok(html.indexOf("Security Council") < html.indexOf("Top delegate"));
+  assert.ok(html.indexOf("Security Council") < html.indexOf("Top Delegate"));
   assert.doesNotMatch(html, /Service Provider Program recipient/);
   assert.match(html, /DAO manages key components of the ENS protocol/);
   assert.match(html, /ChurchPOP/);
@@ -206,13 +206,14 @@ test("pre-renders Brantly's static personal website", async () => {
     /Original content on Web, Twitter, Facebook, Instagram, Snapchat, etc/,
   );
   assert.match(html, /churchpop-logo\.png/);
+  assert.match(html, /Founder and Editor-in-Chief/);
   assert.match(html, /<h3>Second Nature Journal<\/h3>/);
   assert.doesNotMatch(
     html,
     /<h3[^>]*><a[^>]*>Second Nature Journal<\/a><\/h3>/,
   );
   assert.match(html, /second-nature-logo\.png/);
-  assert.match(html, /Co-founder, editor/);
+  assert.match(html, /Co-Founder, Editor/);
   assert.match(html, /class="meta-pill">2013<\/span>/);
   assert.match(
     html,
@@ -226,17 +227,18 @@ test("pre-renders Brantly's static personal website", async () => {
     html.match(/class="meta-pill">2021<\/span>/g)?.length,
     3,
   );
-  assert.match(html, /Project director/);
+  assert.match(html, /Project Director/);
   assert.match(html, /class="meta-pill">2021 – 2022 · 2025 – 2026<\/span>/);
   assert.match(html, /Advisor/);
   assert.match(html, /class="meta-pill">2026 – present<\/span>/);
-  assert.ok(html.indexOf("Project director") < html.indexOf("Advisor"));
-  assert.ok(html.indexOf("EIP 4361") < html.indexOf("Project director"));
+  assert.ok(html.indexOf("Project Director") < html.indexOf("Advisor"));
+  assert.ok(html.indexOf("EIP 4361") < html.indexOf("Project Director"));
   assert.match(
     html,
     /href="https:\/\/eips\.ethereum\.org\/EIPS\/eip-4361"/,
   );
   assert.match(html, />EIP 4361<\/a>/);
+  assert.match(html, /EIP 4361<\/a>\s*(?:<!-- -->)?Co-Author/);
   assert.match(
     html,
     /class="project-role-label"><a href="https:\/\/eips\.ethereum\.org\/EIPS\/eip-4361"/,
@@ -250,7 +252,7 @@ test("pre-renders Brantly's static personal website", async () => {
   assert.match(html, />EthID</);
   assert.match(html, /ethid-logo\.png/);
   assert.match(html, /class="project-logo ethid-logo"/);
-  assert.match(html, /Founder, executive director/);
+  assert.match(html, /Founder, Executive Director/);
   assert.equal(
     html.match(/class="meta-pill">2024 – 2026<\/span>/g)?.length,
     2,
@@ -415,6 +417,11 @@ test("removes all temporary starter preview code", async () => {
   assert.match(index, /og:image:height" content="630"/);
   assert.doesNotMatch(index, /about me/i);
   assert.match(page, /Last updated August 2026/);
+  assert.match(page, /Founder and Editor-in-Chief/);
+  assert.match(
+    globals,
+    /\.site-footer \{[\s\S]*?border-top: 1px solid var\(--border\)/,
+  );
   assert.doesNotMatch(globals, /\.theme-indicator/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(

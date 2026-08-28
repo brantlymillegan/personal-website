@@ -165,7 +165,7 @@ export default function Home() {
                 summary={(toggle) => (
                   <div className="project-roles">
                     <RoleLine years="2019 – 2022" toggle={toggle}>
-                      Director of operations
+                      Director of Operations
                     </RoleLine>
                   </div>
                 )}
@@ -209,13 +209,13 @@ export default function Home() {
                 mobileFullWidth
                 summary={(toggle) => (
                   <div className="project-roles">
-                    <RoleLine years="2021">Launch lead</RoleLine>
+                    <RoleLine years="2021">Launch Lead</RoleLine>
                     <RoleLine years="2021 – 2023">
-                      ENS Foundation, founding director
+                      ENS Foundation, Founding Director
                     </RoleLine>
                     <RoleLine years="2024 – 2026">Security Council</RoleLine>
                     <RoleLine years="2021 – 2026" toggle={toggle}>
-                      Top delegate
+                      Top Delegate
                     </RoleLine>
                   </div>
                 )}
@@ -258,10 +258,10 @@ export default function Home() {
                       >
                         EIP 4361
                       </a>{" "}
-                      co-author
+                      Co-Author
                     </RoleLine>
                     <RoleLine years="2021 – 2022 · 2025 – 2026">
-                      Project director
+                      Project Director
                     </RoleLine>
                     <RoleLine years="2026 – present" toggle={toggle}>
                       Advisor
@@ -299,7 +299,7 @@ export default function Home() {
                 summary={(toggle) => (
                   <div className="project-roles">
                     <RoleLine years="2024 – 2026" toggle={toggle}>
-                      Founder, executive director
+                      Founder, Executive Director
                     </RoleLine>
                   </div>
                 )}
@@ -497,7 +497,7 @@ export default function Home() {
                 summary={(toggle) => (
                   <div className="project-roles">
                     <RoleLine years="2014 – 2022" toggle={toggle}>
-                      Founder and editor-in-chief
+                      Founder and Editor-in-Chief
                     </RoleLine>
                   </div>
                 )}
@@ -532,7 +532,7 @@ export default function Home() {
                 summary={(toggle) => (
                   <div className="project-roles">
                     <RoleLine years="2013" toggle={toggle}>
-                      Co-founder, editor
+                      Co-Founder, Editor
                     </RoleLine>
                   </div>
                 )}

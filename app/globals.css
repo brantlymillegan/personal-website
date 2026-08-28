@@ -674,12 +674,14 @@ p {
 }
 
 .site-footer {
+  border-top: 1px solid var(--border);
   color: var(--muted);
   display: grid;
   font-size: 0.72rem;
   gap: 36px;
   grid-template-columns: 132px 1fr;
-  padding-top: 8px;
+  padding-top: 24px;
+  transition: border-color 180ms ease;
 }
 
 .site-footer p {
@@ -959,7 +961,7 @@ p {
 
   .site-footer {
     display: block;
-    padding-top: 0;
+    padding-top: 16px;
   }
 
   .site-footer p {
