@@ -7,20 +7,11 @@
   <rect width="1200" height="630" fill="#fbfaf7" />
   <text
     x="84"
-    y="270"
+    y="500"
     fill="#1b1a18"
     font-family="Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
-    font-size="86"
-    font-weight="600"
-    letter-spacing="-2"
+    font-size="136"
+    font-weight="700"
+    letter-spacing="-3.8"
   >Brantly Millegan</text>
-  <line x1="84" y1="323" x2="1116" y2="323" stroke="#dedbd4" />
-  <text
-    x="84"
-    y="390"
-    fill="#716e68"
-    font-family="Avenir Next, Helvetica Neue, Helvetica, Arial, sans-serif"
-    font-size="32"
-    font-weight="500"
-  >Projects and education</text>
 </svg>

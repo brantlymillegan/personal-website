@@ -353,6 +353,7 @@ test("removes all temporary starter preview code", async () => {
     globals,
     packageJson,
     favicon,
+    ogSvg,
     themeToggle,
     mobileCollapsible,
   ] =
@@ -362,6 +363,7 @@ test("removes all temporary starter preview code", async () => {
       readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
       readFile(new URL("../package.json", import.meta.url), "utf8"),
       readFile(new URL("../public/favicon.svg", import.meta.url), "utf8"),
+      readFile(new URL("../public/og.svg", import.meta.url), "utf8"),
       readFile(new URL("../app/theme-toggle.tsx", import.meta.url), "utf8"),
       readFile(
         new URL("../app/mobile-collapsible-list.tsx", import.meta.url),
@@ -391,6 +393,10 @@ test("removes all temporary starter preview code", async () => {
   );
   assert.match(favicon, />⟢<\/text>/);
   assert.match(favicon, /fill="#1b1b1b"/);
+  assert.match(ogSvg, />Brantly Millegan<\/text>/);
+  assert.match(ogSvg, /y="500"/);
+  assert.match(ogSvg, /font-size="136"/);
+  assert.doesNotMatch(ogSvg, /Projects and education/i);
   assert.match(themeToggle, /aria-expanded=\{isOpen\}/);
   assert.match(themeToggle, /function ThemeIcon/);
   assert.match(themeToggle, /otherThemes\.map/);
@@ -416,6 +422,16 @@ test("removes all temporary starter preview code", async () => {
   assert.match(index, /og:image:width" content="1200"/);
   assert.match(index, /og:image:height" content="630"/);
   assert.doesNotMatch(index, /about me/i);
+  assert.doesNotMatch(index, /Projects and education/i);
+  assert.doesNotMatch(
+    index,
+    /name="description"|property="og:description"|name="twitter:description"/,
+  );
+  assert.match(index, /https:\/\/brantly\.com\/og-brantly-v2\.png/);
+  assert.match(
+    index,
+    /property="og:image:alt"\s+content="Brantly Millegan"/,
+  );
   assert.match(page, /Last updated August 2026/);
   assert.match(page, /Founder and Editor-in-Chief/);
   assert.match(
